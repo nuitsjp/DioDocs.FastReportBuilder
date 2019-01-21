@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Common;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Xml;
 using System.Xml.Serialization;
 using DioDocs.FastReportBuilder;
 using GrapeCity.Documents.Excel;
@@ -39,8 +35,8 @@ namespace InvoiceService.Console
                             .AddTableSetter("$UnitPrice", (cell, detail) => cell.Value = detail.UnitPrice)
                             .AddTableSetter("$OrderQuantity", (cell, detail) => cell.Value = detail.OrderQuantity);
 
-                    var report = reportBuilder.Build(invoice.InvoiceDetails);
-                    File.WriteAllBytes("result.pdf", report);
+                    var workbook = reportBuilder.Build(invoice.InvoiceDetails);
+                    workbook.Save("result.pdf", SaveFileFormat.Pdf);
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace DioDocs.FastReportBuilder
         /// <summary>
         /// テンプレートとなるExcelファイル
         /// </summary>
-        private readonly Workbook _workbook;
+        private readonly byte[] _excel;
         /// <summary>
         /// 明細行を表示するExcelテーブルの名称
         /// </summary>
@@ -29,8 +29,8 @@ namespace DioDocs.FastReportBuilder
 
         public ReportBuilder(Stream excel)
         {
-            _workbook = new Workbook();
-            _workbook.Open(excel);
+            _excel = new byte[excel.Length];
+            excel.Read(_excel, 0, (int)excel.Length);
             _tableName = typeof(TReportRow).Name;
         }
 
@@ -46,9 +46,15 @@ namespace DioDocs.FastReportBuilder
             return this;
         }
 
-        public byte[] Build(IList<TReportRow> rows)
+        public IWorkbook Build(IList<TReportRow> rows)
         {
-            var worksheet = _workbook.Worksheets[0];
+            IWorkbook workbook;
+            using (var stream = new MemoryStream(_excel))
+            {
+                workbook = new Workbook();
+                workbook.Open(stream);
+            }
+            var worksheet = workbook.Worksheets[0];
 
             // コールバックに渡すためのIRangeオブジェクト
             // 都度生成すると、大きな帳票ではインスタンス生成コストが無視できない
@@ -104,11 +110,7 @@ namespace DioDocs.FastReportBuilder
                 }
             }
 
-            using (var outputStream = new MemoryStream())
-            {
-                _workbook.Save(outputStream, SaveFileFormat.Pdf);
-                return outputStream.ToArray();
-            }
+            return workbook;
         }
     }
 }
