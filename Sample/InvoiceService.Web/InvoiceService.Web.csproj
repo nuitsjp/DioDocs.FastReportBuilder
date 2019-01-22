@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\js\typings\**" />
+    <Content Remove="wwwroot\js\typings\**" />
+    <EmbeddedResource Remove="wwwroot\js\typings\**" />
+    <None Remove="wwwroot\js\typings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="app.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.0" />
+    <PackageReference Include="C1.AspNetCore.Mvc.ja" Version="1.0.20183.176" />
+    <PackageReference Include="SimpleInjector.Extras.DynamicProxy" Version="1.1.0" />
+    <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.4.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\DioDocs.FastReportBuilder\DioDocs.FastReportBuilder.csproj" />
+    <ProjectReference Include="..\InvoiceService.Repository.SqlServer\InvoiceService.Repository.SqlServer.csproj" />
+    <ProjectReference Include="..\InvoiceService.Repository\InvoiceService.Repository.csproj" />
+    <ProjectReference Include="..\InvoiceService.Transaction\InvoiceService.Transaction.csproj" />
+    <ProjectReference Include="..\InvoiceService.UseCase.Impl\InvoiceService.UseCase.Impl.csproj" />
+    <ProjectReference Include="..\InvoiceService.UseCase\InvoiceService.UseCase.csproj" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="if not exist $(ProjectDir)appsettings.json copy $(ProjectDir)appsettings.json_base $(ProjectDir)appsettings.json" />
+  </Target>
+
+</Project>
