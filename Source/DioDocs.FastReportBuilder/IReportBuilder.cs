@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using GrapeCity.Documents.Excel;
 
 namespace DioDocs.FastReportBuilder
@@ -21,6 +22,6 @@ namespace DioDocs.FastReportBuilder
         /// <summary>
         /// 表の行オブジェクトを引数に指定して帳票を生成する
         /// </summary>
-        IWorkbook Build(IList<TReportRow> rows);
+        void Build(IList<TReportRow> rows, Stream stream, SaveFileFormat saveFileFormat);
     }
 }

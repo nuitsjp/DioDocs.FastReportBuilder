@@ -10,7 +10,7 @@ namespace DioDocs.FastReportBuilder
         /// <summary>
         /// テンプレートとなるExcelファイル
         /// </summary>
-        private readonly byte[] _excel;
+        private readonly byte[] _template;
         /// <summary>
         /// 明細行を表示するExcelテーブルの名称
         /// </summary>
@@ -27,10 +27,10 @@ namespace DioDocs.FastReportBuilder
         private readonly Dictionary<object, Action<IRange, TReportRow>> _tableSetters = 
             new Dictionary<object, Action<IRange, TReportRow>>();
 
-        public ReportBuilder(Stream excel)
+        public ReportBuilder(Stream template)
         {
-            _excel = new byte[excel.Length];
-            excel.Read(_excel, 0, (int)excel.Length);
+            _template = new byte[template.Length];
+            template.Read(_template, 0, (int)template.Length);
             _tableName = typeof(TReportRow).Name;
         }
 
@@ -46,13 +46,13 @@ namespace DioDocs.FastReportBuilder
             return this;
         }
 
-        public IWorkbook Build(IList<TReportRow> rows)
+        public void Build(IList<TReportRow> rows, Stream stream, SaveFileFormat saveFileFormat)
         {
             IWorkbook workbook;
-            using (var stream = new MemoryStream(_excel))
+            using (var inputStream = new MemoryStream(_template))
             {
                 workbook = new Workbook();
-                workbook.Open(stream);
+                workbook.Open(inputStream);
             }
             var worksheet = workbook.Worksheets[0];
 
@@ -110,7 +110,7 @@ namespace DioDocs.FastReportBuilder
                 }
             }
 
-            return workbook;
+            workbook.Save(stream, (GrapeCity.Documents.Excel.SaveFileFormat)saveFileFormat);
         }
     }
 }
