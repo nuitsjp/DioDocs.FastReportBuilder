@@ -1,0 +1,21 @@
+﻿{
+  "DioDocsForExcelKey": "YOUR_KEY",
+  "C1Key": "YOUR_KEY",
+  "TemplateUrl": "YOUR_ADDRESS",
+  "ConnectionStrings": {
+    "DioDocs": "YOUR_CONNECTION_STRING"
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    }
+  }
+}

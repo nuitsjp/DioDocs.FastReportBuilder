@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.89
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceService.Function", "InvoiceService.Function\InvoiceService.Function.csproj", "{2ADF9E05-0BEB-40F4-B8BD-C8DF3FF8D883}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceService.Function.Uploader", "InvoiceService.Function.Uploader\InvoiceService.Function.Uploader.csproj", "{7CDE1C44-474A-4AD2-A33E-2EBD4441C362}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceService.Function.ReportBuilder", "InvoiceService.Function.ReportBuilder\InvoiceService.Function.ReportBuilder.csproj", "{ED0A3ACB-CDCA-4759-85BE-D6C1F3450351}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceService.Function.AppService", "InvoiceService.Function.AppService\InvoiceService.Function.AppService.csproj", "{1A97CE3F-3359-43A4-8FE1-F93D62F3FAF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceService.Function.Benchmark", "InvoiceService.Function.Benchmark\InvoiceService.Function.Benchmark.csproj", "{9D0AAF03-2A35-4860-833B-04676196A6BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2ADF9E05-0BEB-40F4-B8BD-C8DF3FF8D883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ADF9E05-0BEB-40F4-B8BD-C8DF3FF8D883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ADF9E05-0BEB-40F4-B8BD-C8DF3FF8D883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ADF9E05-0BEB-40F4-B8BD-C8DF3FF8D883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CDE1C44-474A-4AD2-A33E-2EBD4441C362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CDE1C44-474A-4AD2-A33E-2EBD4441C362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CDE1C44-474A-4AD2-A33E-2EBD4441C362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CDE1C44-474A-4AD2-A33E-2EBD4441C362}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED0A3ACB-CDCA-4759-85BE-D6C1F3450351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED0A3ACB-CDCA-4759-85BE-D6C1F3450351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED0A3ACB-CDCA-4759-85BE-D6C1F3450351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED0A3ACB-CDCA-4759-85BE-D6C1F3450351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A97CE3F-3359-43A4-8FE1-F93D62F3FAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A97CE3F-3359-43A4-8FE1-F93D62F3FAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A97CE3F-3359-43A4-8FE1-F93D62F3FAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A97CE3F-3359-43A4-8FE1-F93D62F3FAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D0AAF03-2A35-4860-833B-04676196A6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D0AAF03-2A35-4860-833B-04676196A6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D0AAF03-2A35-4860-833B-04676196A6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D0AAF03-2A35-4860-833B-04676196A6BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6378330-24FD-4C72-B4BA-ABF058BFD6CC}
+	EndGlobalSection
+EndGlobal
