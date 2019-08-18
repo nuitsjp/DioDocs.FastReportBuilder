@@ -24,6 +24,7 @@ namespace InvoiceService.Function.Benchmark
         }
     }
 
+    [SimpleJob(launchCount: 1, warmupCount: 5, targetCount: 50)]
     [RPlotExporter, RankColumn]
     public class BuildReport
     {
@@ -34,57 +35,77 @@ namespace InvoiceService.Function.Benchmark
         [Benchmark]
         public void Local()
         {
-            Parallel.ForEach(
-                Enumerable.Range(1, MaxRange).ToArray(),
-                x =>
+            //Parallel.ForEach(
+            //    Enumerable.Range(1, MaxRange).ToArray(),
+            //    x =>
+            //    {
+            //        var invoiceBuilder = new InvoiceBuilder
+            //        {
+            //            Init = () =>
+            //            {
+            //            },
+            //            GetRequestStream = () => new MemoryStream(Properties.Resources.Request),
+            //            GetTemplateStream = (template) => new MemoryStream(Properties.Resources.Invoice),
+            //            Output = (pdf) =>
+            //            {
+            //                using (var stream = new MemoryStream())
+            //                {
+            //                    stream.Write(pdf, 0, pdf.Length);
+            //                }
+            //            }
+            //        };
+            //        invoiceBuilder.Build();
+            //    });
+            var invoiceBuilder = new InvoiceBuilder
+            {
+                Init = () =>
                 {
-                    var invoiceBuilder = new InvoiceBuilder
+                },
+                GetRequestStream = () => new MemoryStream(Properties.Resources.Request),
+                GetTemplateStream = (template) => new MemoryStream(Properties.Resources.Invoice),
+                Output = (pdf) =>
+                {
+                    using (var stream = new MemoryStream())
                     {
-                        Init = () =>
-                        {
-                        },
-                        GetRequestStream = () => new MemoryStream(Properties.Resources.Request),
-                        GetTemplateStream = (template) => new MemoryStream(Properties.Resources.Invoice),
-                        Output = (pdf) =>
-                        {
-                            using var stream = new MemoryStream();
-                            stream.Write(pdf, 0, pdf.Length);
-                        }
-                    };
-                    invoiceBuilder.Build();
-                });
+                        stream.Write(pdf, 0, pdf.Length);
+                    }
+                }
+            };
+            invoiceBuilder.Build();
+
         }
 
-        [Benchmark]
-        public void LocalFunctions()
-        {
-            Parallel.ForEach(
-                Enumerable.Range(1, MaxRange).ToArray(),
-                x => HttpClient.GetAsync("http://localhost:7071/api/Function01").GetAwaiter().GetResult());
-        }
+        //[Benchmark]
+        //public void LocalFunctions()
+        //{
+        //    Parallel.ForEach(
+        //        Enumerable.Range(1, MaxRange).ToArray(),
+        //        x => HttpClient.GetAsync("http://localhost:7071/api/Function01").GetAwaiter().GetResult());
+        //}
 
-        [Benchmark]
-        public void LocalAppService()
-        {
-            Parallel.ForEach(
-                Enumerable.Range(1, MaxRange).ToArray(),
-                x => HttpClient.GetAsync("https://localhost:44341/api/values").GetAwaiter().GetResult());
-        }
+        //[Benchmark]
+        //public void LocalAppService()
+        //{
+        //    Parallel.ForEach(
+        //        Enumerable.Range(1, MaxRange).ToArray(),
+        //        x => HttpClient.GetAsync("https://localhost:44341/api/values").GetAwaiter().GetResult());
+        //}
 
         [Benchmark]
         public void RemoteAppService()
         {
-            Parallel.ForEach(
-                Enumerable.Range(1, MaxRange).ToArray(),
-                x => HttpClient.GetAsync("http://ddt2.azurewebsites.net/api/values").GetAwaiter().GetResult());
+            //Parallel.ForEach(
+            //    Enumerable.Range(1, MaxRange).ToArray(),
+            //    x => HttpClient.GetAsync("http://ddt2.azurewebsites.net/api/values").GetAwaiter().GetResult());
+            HttpClient.GetAsync("http://ddt2.azurewebsites.net/api/values").GetAwaiter().GetResult();
         }
 
-        [Benchmark]
-        public void RemoteFunctions()
-        {
-            Parallel.ForEach(
-                Enumerable.Range(1, MaxRange).ToArray(),
-                x => HttpClient.GetAsync("https://ddt2functions.azurewebsites.net/api/Function01?code=tf3SIcLLjy3RobgimzCvhr7QXa6c8q8oRGKzKHrLrFDfoOZ05kUVBQ==").GetAwaiter().GetResult());
-        }
+        //[Benchmark]
+        //public void RemoteFunctions()
+        //{
+        //    Parallel.ForEach(
+        //        Enumerable.Range(1, MaxRange).ToArray(),
+        //        x => HttpClient.GetAsync("https://ddt2functions.azurewebsites.net/api/Function01?code=tf3SIcLLjy3RobgimzCvhr7QXa6c8q8oRGKzKHrLrFDfoOZ05kUVBQ==").GetAwaiter().GetResult());
+        //}
     }
 }
