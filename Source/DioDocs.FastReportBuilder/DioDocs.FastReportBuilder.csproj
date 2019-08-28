@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GrapeCity.DioDocs.Excel.ja" Version="1.5.0.8" />
+    <PackageReference Include="GrapeCity.DioDocs.Excel.ja" Version="2.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 

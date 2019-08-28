@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using InvoiceService.Function.ReportBuilder;
 
 namespace InvoiceService.Function.Console
@@ -9,18 +10,22 @@ namespace InvoiceService.Function.Console
     {
         static void Main(string[] args)
         {
-            Build();
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
-            System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //Parallel.ForEach(
+            //    Enumerable.Range(1, 100),
+            //    x => Build());
+            Enumerable.Range(1, 200).ToList().ForEach(x => Build(x));
+            //Build();
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
+            //System.Console.WriteLine(Build().MeasurementResults.Where(x => x.Item1 == "SavePdf").Select(x => $"{x.Item1}:{x.Item2}").Single());
 
             //invoiceBuilder
             //    .MeasurementResults.Select(x => $"{x.Item1}:{x.Item2}")
@@ -28,8 +33,9 @@ namespace InvoiceService.Function.Console
             //    .ForEach(System.Console.WriteLine);
         }
 
-        private static InvoiceBuilder Build()
+        private static InvoiceBuilder Build(int number)
         {
+            System.Console.WriteLine($"Build No.{number}");
             var invoiceBuilder = new InvoiceBuilder
             {
                 Init = () => { },

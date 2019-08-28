@@ -12,6 +12,8 @@ namespace InvoiceService.Function.ReportBuilder
 {
     public class InvoiceBuilder
     {
+        static InvoiceBuilder() => Workbook.SetLicenseKey(Secrets.DioDocsKey);
+
         public Action Init { get; set; }
         public Func<Stream> GetRequestStream { get; set; }
 
