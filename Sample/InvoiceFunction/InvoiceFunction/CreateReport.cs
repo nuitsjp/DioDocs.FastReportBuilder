@@ -23,24 +23,20 @@ namespace InvoiceFunction
             [Blob("reports", FileAccess.Write)] CloudBlobContainer outputContainer,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
             await outputContainer.CreateIfNotExistsAsync();
 
-            var fileName = $"{DateTime.Now:yyyyMMdd-HHmmss}.pdf";
-
+            var fileName = $"{Guid.NewGuid()}.pdf";
             var cloudBlockBlob = outputContainer.GetBlockBlobReference(fileName);
 
+            var builder = new JsonReportBuilder(template);                  // 1. 引数の「template」Streamからビルダーを生成
 
-            var builder = new JsonReportBuilder(template);
-            using (var input = new StreamReader(req.Body, Encoding.UTF8))
+            using (var input = new StreamReader(req.Body, Encoding.UTF8))   // 2. HTTP RequestボディからTextReaderを生成
             using (var output = await cloudBlockBlob.OpenWriteAsync())
             {
-                builder.Build(input, output, SaveFileFormat.Pdf);
+                builder.Build(input, output, SaveFileFormat.Pdf);           // 3. JsonReportBuilder
             }
 
-
-            return new OkObjectResult($"fileName:{fileName}");
+            return new OkObjectResult(fileName);
         }
     }
 }

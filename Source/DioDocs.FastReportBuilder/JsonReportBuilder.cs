@@ -12,6 +12,7 @@ namespace DioDocs.FastReportBuilder
     public class JsonReportBuilder : IJsonReportBuilder
     {
         private readonly byte[] _template;
+        private bool _isInitialized;
         /// <summary>
         /// 単項目を設定するためのSetter
         /// </summary>
@@ -33,17 +34,10 @@ namespace DioDocs.FastReportBuilder
             template.Read(_template, 0, _template.Length);
         }
 
-        public void Build(TextReader reader, Stream output, SaveFileFormat saveFileFormat)
-        {
-            using (var jsonTextReader = new JsonTextReader(reader))
-            {
-                Build(JToken.ReadFrom(jsonTextReader), output, saveFileFormat);
-            }
-        }
-
-        public void Build(JToken input, Stream output, SaveFileFormat saveFileFormat)
+        public void Build(TextReader input, Stream output, SaveFileFormat saveFileFormat)
         {
             using (var memoryStream = new MemoryStream(_template))
+            using (var reader = new JsonTextReader(input))
             {
                 IWorkbook workbook = new Workbook();
                 workbook.Open(memoryStream);
@@ -51,47 +45,52 @@ namespace DioDocs.FastReportBuilder
                 var settingWorksheet = workbook.Worksheets["DioDocs.FastReportBuilder"];
                 if (settingWorksheet == null) throw new InvalidOperationException("Setting Worksheet(DioDocs.FastReportBuilder) is not exist.");
 
-                if (!_accessors.Any()) ParseSettings(settingWorksheet);
+                if (!_isInitialized) ParseSettings(settingWorksheet);
 
                 settingWorksheet.Delete();
 
 
                 var worksheet = workbook.Worksheets[0];
+                var json = JToken.ReadFrom(reader);
 
                 foreach (var rangeAccessor in _accessors)
                 {
-                    rangeAccessor.Set(worksheet, input);
+                    rangeAccessor.Set(worksheet, json);
                 }
 
                 if (_tableName != null)
-                {
-                    var table = worksheet.Tables[_tableName];
-                    var rows = input[_tableName];
-
-                    // テーブルの行数を確認し、不足分を追加する
-                    if (table.Rows.Count < rows.Count())
-                    {
-                        var addCount = rows.Count() - table.Rows.Count;
-                        for (var i = 0; i < addCount; i++)
-                        {
-                            table.Rows.Add(table.Rows.Count - 1);
-                        }
-                    }
-
-                    // テーブルに値を設定する
-                    var rowNumber = 0;
-                    foreach (var row in rows)
-                    {
-                        var tableRow = table.Rows[rowNumber];
-                        foreach (var tableAccessor in _tableAccessors)
-                        {
-                            tableAccessor.Set(tableRow, row);
-                        }
-                        rowNumber++;
-                    }
-                }
+                    SetTable(worksheet, json);
 
                 workbook.Save(output, (GrapeCity.Documents.Excel.SaveFileFormat)saveFileFormat);
+            }
+        }
+
+        private void SetTable(IWorksheet worksheet, JToken json)
+        {
+            var table = worksheet.Tables[_tableName];
+            var rows = json[_tableName];
+
+            // テーブルの行数を確認し、不足分を追加する
+            if (table.Rows.Count < rows.Count())
+            {
+                var addCount = rows.Count() - table.Rows.Count;
+                for (var i = 0; i < addCount; i++)
+                {
+                    table.Rows.Add(table.Rows.Count - 1);
+                }
+            }
+
+            // テーブルに値を設定する
+            var rowNumber = 0;
+            foreach (var row in rows)
+            {
+                var tableRow = table.Rows[rowNumber];
+                foreach (var tableAccessor in _tableAccessors)
+                {
+                    tableAccessor.Set(tableRow, row);
+                }
+
+                rowNumber++;
             }
         }
 
@@ -119,6 +118,7 @@ namespace DioDocs.FastReportBuilder
                     _tableAccessors.Add(new TableRangeAccessor(name, type, int.Parse(usedRange[i, 3].Value.ToString())));
                 }
             }
+            _isInitialized = true;
         }
     }
 }
