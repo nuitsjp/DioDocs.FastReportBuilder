@@ -21,7 +21,7 @@
     <PackageReference Include="C1.AspNetCore.Mvc.ja" Version="1.0.20183.176" />
     <PackageReference Include="SimpleInjector.Extras.DynamicProxy" Version="1.1.0" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.6.2" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
